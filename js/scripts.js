@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add click sound effect (using Web Audio API)
     setupAudioContext();
+    
+    // Add floating images
+    createFloatingImages();
+    
+    // Restart floating images every 10 seconds
+    setInterval(createFloatingImages, 10000);
 });
 
 // Function to show surprise message
@@ -324,3 +330,38 @@ rippleStyle.textContent = `
     }
 `;
 document.head.appendChild(rippleStyle);
+
+// Create floating images function
+function createFloatingImages() {
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const img = document.createElement('img');
+            img.src = '../images/510434506_1256081902761270_5304385400308496768_n.png';
+            img.alt = 'Floating image';
+            img.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 40 + 40}px;
+                height: auto;
+                opacity: 0;
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                z-index: 3;
+                pointer-events: none;
+                animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
+                animation-delay: ${Math.random() * 2}s;
+            `;
+
+            document.body.appendChild(img);
+
+            setTimeout(() => {
+                img.style.opacity = '0.6';
+            }, 100);
+
+            setTimeout(() => {
+                if (img.parentNode) {
+                    img.remove();
+                }
+            }, 7000);
+        }, i * 400);
+    }
+}
