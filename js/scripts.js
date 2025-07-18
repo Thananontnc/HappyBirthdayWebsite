@@ -434,3 +434,151 @@ function createCursorTrail() {
         }, 800);
     });
 }
+
+// Memory card game
+function createMemoryGame() {
+    const gameContainer = document.createElement('div');
+    gameContainer.className = 'memory-game';
+    gameContainer.innerHTML = `
+        <h3>🎮 Find the Matching Hearts! 🎮</h3>
+        <div class="game-board"></div>
+        <button class="close-game">Close Game</button>
+    `;
+    
+    const emojis = ['💖', '🎂', '🎁', '🌟', '🎈', '🎉'];
+    const cards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+    
+    const gameBoard = gameContainer.querySelector('.game-board');
+    let flippedCards = [];
+    let matches = 0;
+    
+    cards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.emoji = emoji;
+        card.innerHTML = '<div class="card-front">?</div><div class="card-back">' + emoji + '</div>';
+        
+        card.addEventListener('click', () => {
+            if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                
+                if (flippedCards.length === 2) {
+                    setTimeout(() => {
+                        if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                            matches++;
+                            if (matches === emojis.length) {
+                                setTimeout(() => alert('🎉 You won! Happy Birthday! 🎉'), 500);
+                            }
+                        } else {
+                            flippedCards.forEach(c => c.classList.remove('flipped'));
+                        }
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        });
+        
+        gameBoard.appendChild(card);
+    });
+    
+    gameContainer.querySelector('.close-game').onclick = () => gameContainer.remove();
+    document.body.appendChild(gameContainer);
+}
+
+// Balloon pop game
+function createBalloonPopGame() {
+    const gameContainer = document.createElement('div');
+    gameContainer.className = 'balloon-pop-game';
+    gameContainer.innerHTML = `
+        <h3>🎈 Pop 10 Balloons to Win! 🎈</h3>
+        <div class="score">Score: <span id="pop-score">0</span>/10</div>
+        <div class="game-area"></div>
+        <button class="close-game">Close Game</button>
+    `;
+    
+    const gameArea = gameContainer.querySelector('.game-area');
+    const scoreElement = gameContainer.querySelector('#pop-score');
+    let score = 0;
+    
+    function createBalloon() {
+        const balloon = document.createElement('div');
+        balloon.className = 'pop-balloon';
+        balloon.style.cssText = `
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background: hsl(${Math.random() * 360}, 70%, 60%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            left: ${Math.random() * 90}%;
+            top: 100%;
+            cursor: pointer;
+            animation: balloon-rise 4s linear forwards;
+        `;
+        
+        balloon.addEventListener('click', () => {
+            balloon.style.animation = 'balloon-pop 0.3s ease-out forwards';
+            score++;
+            scoreElement.textContent = score;
+            
+            if (score >= 10) {
+                setTimeout(() => {
+                    alert('🎉 Amazing! You popped all balloons! 🎉');
+                    gameContainer.remove();
+                }, 500);
+            }
+            
+            setTimeout(() => balloon.remove(), 300);
+        });
+        
+        gameArea.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 4000);
+    }
+    
+    const balloonInterval = setInterval(() => {
+        if (score < 10) createBalloon();
+        else clearInterval(balloonInterval);
+    }, 800);
+    
+    gameContainer.querySelector('.close-game').onclick = () => {
+        clearInterval(balloonInterval);
+        gameContainer.remove();
+    };
+    
+    document.body.appendChild(gameContainer);
+}
+
+// Wish guessing game
+function createWishGame() {
+    const wishes = [
+        "May all your dreams come true! ✨",
+        "Wishing you endless happiness! 😊",
+        "May this year bring you joy! 🌟",
+        "Hope your day is magical! 🎭",
+        "Sending you love and hugs! 🤗"
+    ];
+    
+    const gameContainer = document.createElement('div');
+    gameContainer.className = 'wish-game';
+    gameContainer.innerHTML = `
+        <h3>🔮 Pick a Magic Number (1-5) 🔮</h3>
+        <p>Choose a number and receive a special birthday wish!</p>
+        <div class="number-buttons">
+            ${[1,2,3,4,5].map(n => `<button class="wish-btn" data-num="${n}">${n}</button>`).join('')}
+        </div>
+        <div class="wish-result"></div>
+        <button class="close-game">Close</button>
+    `;
+    
+    gameContainer.querySelectorAll('.wish-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const num = parseInt(btn.dataset.num) - 1;
+            const result = gameContainer.querySelector('.wish-result');
+            result.innerHTML = `<div class="wish-message">${wishes[num]}</div>`;
+            result.style.animation = 'fadeIn 1s ease-in';
+        });
+    });
+    
+    gameContainer.querySelector('.close-game').onclick = () => gameContainer.remove();
+    document.body.appendChild(gameContainer);
+}
