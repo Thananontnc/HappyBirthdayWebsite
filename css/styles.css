@@ -266,20 +266,20 @@ body {
     height: 20px;
     background: #ffff00;
     border-radius: 2px;
-    top: 25px;
+    top: 5px; /* Move to very top of cake */
 }
 
 .candle1 { left: 40px; }
 .candle2 { left: 58px; }
 .candle3 { left: 76px; }
-
+p
 .flame {
     position: absolute;
     width: 6px;
     height: 8px;
     background: radial-gradient(circle, #ffa500 0%, #ff4500 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    top: 17px;
+    top: -3px; /* Above the candle */
     animation: flicker 0.5s infinite alternate;
 }
 
@@ -433,6 +433,48 @@ body {
     .message p {
         font-size: 1em;
     }
+    
+    /* Fix cake positioning for tablets */
+    .cake {
+        width: 100px;
+        height: 70px;
+    }
+    
+    .cake-bottom {
+        width: 100px;
+        height: 25px;
+    }
+    
+    .cake-middle {
+        width: 85px;
+        height: 22px;
+        bottom: 22px;
+    }
+    
+    .cake-top {
+        width: 70px;
+        height: 18px;
+        bottom: 40px;
+    }
+    
+    .candle {
+        height: 18px;
+        top: 5px; /* Keep at top */
+    }
+    
+    .candle1 { left: 32px; }
+    .candle2 { left: 47px; }
+    .candle3 { left: 62px; }
+    
+    .flame {
+        top: -2px; /* Above candle */
+        width: 5px;
+        height: 7px;
+    }
+    
+    .flame1 { left: 31px; }
+    .flame2 { left: 46px; }
+    .flame3 { left: 61px; }
 }
 
 @media (max-width: 480px) {
@@ -440,6 +482,12 @@ body {
         font-size: 2em;
     }
     
+    .birthday-card {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    /* Mobile cake adjustments */
     .cake {
         width: 80px;
         height: 60px;
@@ -460,6 +508,136 @@ body {
         width: 60px;
         height: 15px;
         bottom: 33px;
+    }
+    
+    .candle {
+        width: 3px;
+        height: 15px;
+        top: 3px; /* At top of smaller cake */
+    }
+    
+    .candle1 { left: 28px; }
+    .candle2 { left: 38px; }
+    .candle3 { left: 48px; }
+    
+    .flame {
+        width: 4px;
+        height: 6px;
+        top: -2px; /* Above candle */
+    }
+    
+    .flame1 { left: 27px; }
+    .flame2 { left: 37px; }
+    .flame3 { left: 47px; }
+    
+    /* Mobile game adjustments */
+    .game-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-btn {
+        width: 200px;
+        margin: 5px 0;
+    }
+    
+    .memory-game, .balloon-pop-game, .wish-game {
+        width: 90%;
+        max-width: 350px;
+        padding: 15px;
+    }
+    
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    .memory-card {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 320px) {
+    .main-title {
+        font-size: 1.8em;
+    }
+    
+    .sub-title {
+        font-size: 1em;
+    }
+    
+    /* Extra small mobile cake */
+    .cake {
+        width: 70px;
+        height: 50px;
+    }
+    
+    .cake-bottom {
+        width: 70px;
+        height: 18px;
+    }
+    
+    .cake-middle {
+        width: 60px;
+        height: 15px;
+        bottom: 16px;
+    }
+    
+    .cake-top {
+        width: 50px;
+        height: 12px;
+        bottom: 28px;
+    }
+    
+    .candle {
+        width: 2px;
+        height: 12px;
+        top: 2px; /* At top of smallest cake */
+    }
+    
+    .candle1 { left: 26px; }
+    .candle2 { left: 34px; }
+    .candle3 { left: 42px; }
+    
+    .flame {
+        width: 3px;
+        height: 5px;
+        top: -2px; /* Above candle */
+    }
+    
+    .flame1 { left: 25px; }
+    .flame2 { left: 33px; }
+    .flame3 { left: 41px; }
+}
+
+/* Landscape orientation fixes */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+    }
+    
+    .birthday-card {
+        padding: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .main-title {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+    
+    .cake-container {
+        margin: 20px 0;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .cake, .candle, .flame {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }
 
