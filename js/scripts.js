@@ -17,6 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Restart floating images every 10 seconds
     setInterval(createFloatingImages, 10000);
+    
+    // Create floating particles
+    createParticles();
+    
+    // Smooth scroll reveal animation
+    revealOnScroll();
+    
+    // Interactive cursor trail
+    createCursorTrail();
 });
 
 // Function to show surprise message
@@ -364,4 +373,64 @@ function createFloatingImages() {
             }, 7000);
         }, i * 400);
     }
+}
+
+// Create floating particles
+function createParticles() {
+    setInterval(() => {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        particle.style.opacity = Math.random() * 0.5 + 0.3;
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+        }, 8000);
+    }, 300);
+}
+
+// Smooth scroll reveal animation
+function revealOnScroll() {
+    const elements = document.querySelectorAll('.message p, .cake, .surprise-btn');
+    elements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, index * 200 + 1000);
+    });
+}
+
+// Interactive cursor trail
+function createCursorTrail() {
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.style.cssText = `
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 107, 157, 0.6);
+            border-radius: 50%;
+            left: ${e.clientX - 3}px;
+            top: ${e.clientY - 3}px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: trail-fade 0.8s ease-out forwards;
+        `;
+        
+        document.body.appendChild(trail);
+        
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.remove();
+            }
+        }, 800);
+    });
 }
